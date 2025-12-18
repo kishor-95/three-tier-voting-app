@@ -1,0 +1,15 @@
+## Configuration For Persistent Volume (Optional, depending on your cluster setup)
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:              # for local kubernetes clusters only
+    path: /mnt/mysql-data
