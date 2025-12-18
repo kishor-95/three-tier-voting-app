@@ -165,7 +165,7 @@ const App: React.FC = () => {
       )}
       
       <footer className="py-6 text-center text-slate-600 text-sm border-t border-slate-900 mt-auto">
-        Build with love ❤️
+        A hands-on DevOps project focused on real-world deployment practices.
       </footer>
     </div>
   );
