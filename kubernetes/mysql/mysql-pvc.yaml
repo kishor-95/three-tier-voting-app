@@ -1,0 +1,15 @@
+## Setup Persistent Volume Claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: vote-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: standard
+## Note: Make sure to have a StorageClass named 'standard' in your cluster or change it accordingly.
