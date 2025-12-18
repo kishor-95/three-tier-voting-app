@@ -34,7 +34,7 @@ This project is a 3-tier microservice application designed for DevOps training a
 ### 3. Frontend Setup
 - Navigate to the frontend folder: `cd frontend`
 - Install dependencies: `npm install`
-- Start the development server: `npm run dev` (Runs on port 3000)
+- Start the development server: `npm run dev -- --port 3000` (Runs on port 3000)
 
 ---
 
@@ -42,7 +42,7 @@ This project is a 3-tier microservice application designed for DevOps training a
 
 One command to start the entire stack:
 ```bash
-docker-compose up --build
+docker-compose up
 ```
 - **Frontend**: `http://localhost:3000`
 - **Backend API**: `http://localhost:5000`
