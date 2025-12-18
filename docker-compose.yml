@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Tier 1: Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - voting-network
+
+  # Tier 2: Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=mysql
+      - DB_USER=devops
+      - DB_PASSWORD=password
+      - DB_NAME=voting_app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - voting-network
+
+  # Tier 3: Database Service
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=voting_app
+      - MYSQL_USER=devops
+      - MYSQL_PASSWORD=password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - voting-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+networks:
+  voting-network:
+    driver: bridge
+
+volumes:
+  db_data:
