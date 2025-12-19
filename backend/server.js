@@ -137,7 +137,7 @@ app.get('/api/votes', async (req, res) => {
     
     const results = { ...defaultVotes };
     rows.forEach(row => {
-      if (results.hasOwnProperty(row.option_id)) {
+      if (Object.prototype.hasOwnProperty.call(results, row.option_id)) {                // (results.hasOwnProperty(row.option_id)) original
         results[row.option_id] = parseInt(row.count);
       }
     });
