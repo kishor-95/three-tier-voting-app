@@ -9,11 +9,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: mysql-deployment
   template:
     metadata:
       labels:
-        app: mysql
+        app: mysql-deployment
     spec:
       containers:
         - name: mysql

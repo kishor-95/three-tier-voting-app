@@ -6,8 +6,9 @@ spec:
   selector:
     app: vote-app-backend
   ports:
-  - name: name-of-service-port
+  - name: backend-service-port
     protocol: TCP
     port: 5000
     targetPort: 5000
+    #nodePort: 30001
   type: ClusterIP

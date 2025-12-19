@@ -28,11 +28,12 @@ const App: React.FC = () => {
   const [history, setHistory] = useState<VoteHistoryItem[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(true);
   const [notification, setNotification] = useState<string | null>(null);
-  const API_BASE = (import.meta.env.VITE_API_URL as string) ?? 'http://localhost:5000';
+  
+
 
   const fetchVotes = async () => {
     try {
-      const res = await fetch(`${API_BASE}/api/votes`);
+      const res = await fetch(`/api/votes`);
       if (res.ok) {
         const data = await res.json();
         setVotes(prev => (JSON.stringify(prev) !== JSON.stringify(data) ? data : prev));
@@ -77,7 +78,7 @@ const App: React.FC = () => {
     setTimeout(() => setNotification(null), 3000);
 
     try {
-      await fetch(`${API_BASE}/api/vote`, {
+      await fetch(`/api/vote`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ option: optionId })
@@ -93,7 +94,7 @@ const App: React.FC = () => {
     setNotification('Clearing database...');
 
     try {
-      const response = await fetch(`${API_BASE}/api/reset`, { method: 'POST' });
+      const response = await fetch(`/api/reset`, { method: 'POST' });
       
       if (response.ok) {
         setVotes({ a: 0, b: 0 });

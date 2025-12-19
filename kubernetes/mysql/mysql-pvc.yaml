@@ -10,6 +10,6 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 20Gi
-  storageClassName: standard
+      storage: 5Gi 
+  storageClassName: local-storage
 ## Note: Make sure to have a StorageClass named 'standard' in your cluster or change it accordingly.
