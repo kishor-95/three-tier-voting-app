@@ -4,8 +4,8 @@ pipeline {
   environment {
     REGISTRY = "docker.io"
     DOCKER_REPO = "kishor95"
-    BACKEND_IMAGE = "vote-backend"
-    FRONTEND_IMAGE = "vote-frontend"
+    BACKEND_IMAGE = "vote-app-backend"
+    FRONTEND_IMAGE = "vote-app-frontend"
     IMAGE_TAG = "${BUILD_NUMBER}"
   }
 
@@ -20,7 +20,7 @@ pipeline {
     stage('Checkout Code') {
       steps {
         git branch: 'main',
-            credentialsId: 'github-token',
+            credentialsId: 'github-token',            // GitHub token stored in Jenkins for accessing the repo and pushing changes
             url: 'https://github.com/kishor-95/three-tier-voting-app'
       }
     }
@@ -28,7 +28,7 @@ pipeline {
     stage('Init Tools') {
       steps {
         script {
-          env.SCANNER_HOME = tool 'lil_sonar_project'
+          env.SCANNER_HOME = tool 'lil_sonar_project'           // SonarQube Scanner installed in Jenkins
         }
       }
     }
@@ -154,23 +154,30 @@ pipeline {
 
     stage('Update Kubernetes Manifests (GitOps)') {
       steps {
+        withCredentials([usernamePassword(
+        credentialsId: 'github-token',
+        usernameVariable: 'GIT_USER',
+        passwordVariable: 'GIT_TOKEN'
+      )]) {
         sh '''
           git checkout ci-cd
 
-          sed -i "s|image: .*vote-backend.*|image: ${DOCKER_REPO}/${BACKEND_IMAGE}:${IMAGE_TAG}|" kubernetes/backend/backend-deployment.yaml
-          sed -i "s|image: .*vote-frontend.*|image: ${DOCKER_REPO}/${FRONTEND_IMAGE}:${IMAGE_TAG}|" kubernetes/frontend/frontend-deployment.yaml
-
+          sed -i "s|image: .*vote-app-backend.*|image: ${DOCKER_REPO}/${BACKEND_IMAGE}:${IMAGE_TAG}|" kubernetes/backend/backend-deployment.yaml
+          sed -i "s|image: .*vote-app-frontend.*|image: ${DOCKER_REPO}/${FRONTEND_IMAGE}:${IMAGE_TAG}|" kubernetes/frontend/frontend-deployment.yaml
           git config user.name "kishor-95"
           git config user.email "bhairatkishor02@gmail.com"
-          git remote set-url  origin git@github.com:kishor-95/three-tier-voting-app.git
+
+          git config --global credential.helper store
+          echo "https://${GIT_USER}:${GIT_TOKEN}@github.com" > ~/.git-credentials
+
           git add kubernetes/backend/backend-deployment.yaml kubernetes/frontend/frontend-deployment.yaml
           git commit -m "ci: update images to ${IMAGE_TAG}" || echo "No changes"
           git push origin ci-cd
         '''
+        }
       }
-    }
+    } 
   }
-
   post {
     success {
       echo "✅ CI complete. Create PR from ci-cd → main. Argo CD will deploy."
