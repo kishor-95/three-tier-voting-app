@@ -16,7 +16,7 @@ spec:
         app: vote-app-backend
     spec:
       containers:
-      - image: kishor95/vote-app-backend:13
+      - image: kishor95/vote-app-backend:14
         imagePullPolicy: IfNotPresent
         name: backend-vote-app
         ports:
