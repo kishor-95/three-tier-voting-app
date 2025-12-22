@@ -6,7 +6,7 @@ metadata:
   name: frontend-vote-app-deployment
   namespace: vote-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: vote-app-frontend
@@ -19,9 +19,6 @@ spec:
       - image: kishor95/vote-app-frontend:14
         imagePullPolicy: IfNotPresent
         name: frontend-vote-app
-        # env:
-        #  - name: VITE_API_URL
-        #    value: http://backend-service:5000
         ports:
         - containerPort: 80
           protocol: TCP
