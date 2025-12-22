@@ -166,7 +166,7 @@ const App: React.FC = () => {
       )}
       
       <footer className="py-6 text-center text-slate-600 text-sm border-t border-slate-900 mt-auto">
-        A hands-on DevOps project focused on real-world deployment practices.
+       © 2025 Kishor Bhairat Ashruba. Demonstrating real-world DevOps deployment practices.
       </footer>
     </div>
   );
