@@ -16,7 +16,7 @@ spec:
         app: vote-app-frontend
     spec:
       containers:
-      - image: kishor95/vote-app-frontend:11
+      - image: kishor95/vote-app-frontend:13
         imagePullPolicy: IfNotPresent
         name: frontend-vote-app
         # env:
