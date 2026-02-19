@@ -16,13 +16,13 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_key_pair" "generated" {
   key_name   = var.key_name
-  public_key = file("${path.module}/keys/${var.key_name}.pub")
+  public_key = file("${path.module}/${var.key_name}.pub")
 }
 
 
 resource "aws_instance" "project_instance" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = "t3.small"   # free tier not supporting t2.medium or t2.large, so using t2.small chage to t2.medium or t2.large if you want to use those types
   vpc_security_group_ids = [aws_security_group.project_sg.id]
   subnet_id   = aws_subnet.project_subnet.id
   associate_public_ip_address = true

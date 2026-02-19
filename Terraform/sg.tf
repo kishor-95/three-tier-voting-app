@@ -26,7 +26,7 @@ resource "aws_security_group" "project_sg" {
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_block]
   }
 
   ingress {
@@ -42,7 +42,7 @@ resource "aws_security_group" "project_sg" {
     from_port   = 2379
     to_port     = 2380
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_block]
   }
 
   ingress {
@@ -50,7 +50,7 @@ resource "aws_security_group" "project_sg" {
     from_port   = 10250
     to_port     = 10255
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_block]
   }
 
     ingress {
@@ -58,7 +58,7 @@ resource "aws_security_group" "project_sg" {
     from_port   = 30000
     to_port     = 32767
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_block]
   }
 
 
@@ -70,6 +70,6 @@ resource "aws_security_group" "project_sg" {
   }
 
   tags = {
-    Name = "${var.project_name}-sg"
+    Name = "${var.project_name}-security-group"
   }
 }

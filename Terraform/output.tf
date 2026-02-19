@@ -24,7 +24,7 @@ output "security_group_id" {
 # -----------------------
 output "route_table_id" {
   description = "Public Route Table ID"
-  value       = aws_route_table.project_rt.id
+  value       = aws_route_table.project_route_table.id
 }
 
 # -----------------------
@@ -32,7 +32,7 @@ output "route_table_id" {
 # -----------------------
 output "instance_names" {
   description = "Names of EC2 Instances"
-  value       = aws_instance.example[*].tags["Name"]
+  value       = aws_instance.project_instance[*].tags["Name"]
 }
 
 # -----------------------
@@ -40,5 +40,5 @@ output "instance_names" {
 # -----------------------
 output "instance_public_ips" {
   description = "Public IPs of EC2 Instances"
-  value       = aws_instance.example[*].public_ip
+  value       = aws_instance.project_instance[*].public_ip
 }

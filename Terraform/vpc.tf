@@ -30,10 +30,10 @@ resource "aws_internet_gateway" "project_igw" {
 
 ## Gateway Attachment
 
-resource "aws_internet_gateway_attachment" "project_igw_attachment" {
-  internet_gateway_id = aws_internet_gateway.project_igw.id
-  vpc_id              = aws_vpc.project_vpc.id
-}
+# resource "aws_internet_gateway_attachment" "project_igw_attachment" {
+#   internet_gateway_id = aws_internet_gateway.project_igw.id
+#   vpc_id              = aws_vpc.project_vpc.id
+# }
 
 
 ## Route Table
