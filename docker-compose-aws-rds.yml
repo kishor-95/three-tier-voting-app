@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # Tier 1: Frontend Service
+  frontend:
+    image: kishor95/vote-app-frontend:14
+    container_name: frontend-container
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-service
+    networks:
+      - voting-network
+
+  # Tier 2: Backend Service
+  backend-service:
+    image: kishor95/vote-app-backend:14
+    container_name: backend-container
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+    networks:
+      - voting-network
+networks:
+  voting-network:
+    driver: bridge
+
